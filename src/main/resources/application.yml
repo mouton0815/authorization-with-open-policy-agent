@@ -1,0 +1,19 @@
+server:
+  port: 8090
+
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8080/realms/demo
+
+logging:
+  level:
+    root: info
+    org:
+      springframework:
+        security: debug
+
+open-policy-agent:
+  uri: http://localhost:8181/v1/data/demo/allow
