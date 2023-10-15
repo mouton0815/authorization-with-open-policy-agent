@@ -19,6 +19,6 @@ allow if {
 
 # Users with "full" rights can create, update, and delete data on all endpoints
 allow if {
-    input.method in {"POST", "PUT", "DELETE"}
+    input.method in {"GET", "POST", "PUT", "DELETE"}
     "api-full" in input.roles
 }
