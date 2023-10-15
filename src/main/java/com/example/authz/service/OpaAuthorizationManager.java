@@ -59,7 +59,7 @@ public class OpaAuthorizationManager implements AuthorizationManager<RequestAuth
         // logger.info("-----> Roles: {}", roles);
         String companyId = JwtUtil.extractCompanyId(token);
         HttpMethod method = HttpMethod.valueOf(request.getMethod());
-        String[] path = parsePath(request);
+        String path = request.getRequestURI();
         return new OpaRequestData(method, path, roles, companyId);
     }
 
@@ -70,9 +70,5 @@ public class OpaAuthorizationManager implements AuthorizationManager<RequestAuth
         boolean granted = response.getBody().isResult();
         logger.info("Access to {} {} was {}", request.getMethod(), request.getRequestURI(), granted ? "granted" : "NOT granted");
         return new AuthorizationDecision(granted);
-    }
-
-    private String[] parsePath(HttpServletRequest request) {
-        return request.getRequestURI().replaceFirst("^/", "").split("/");
     }
 }

@@ -12,12 +12,12 @@ import java.util.Set;
 public class OpaRequestData {
     static private class Input {
         private final String method;
-        private final String[] path;
+        private final String path;
         private final Set<String> roles;
         @JsonProperty("company_id")
         private final String companyId;
 
-        Input(HttpMethod httpMethod, String[] path, Set<String> roles, String companyId) {
+        Input(HttpMethod httpMethod, String path, Set<String> roles, String companyId) {
             this.method = httpMethod.name();
             this.path = path;
             this.roles = roles;
@@ -28,7 +28,7 @@ public class OpaRequestData {
             return method;
         }
 
-        public String[] getPath() {
+        public String getPath() {
             return path;
         }
 
@@ -43,7 +43,7 @@ public class OpaRequestData {
 
     private final Input input;
 
-    public OpaRequestData(HttpMethod httpMethod, String[] path, Set<String> roles, String companyId) {
+    public OpaRequestData(HttpMethod httpMethod, String path, Set<String> roles, String companyId) {
         this.input = new Input(httpMethod, path, roles, companyId);
     }
 

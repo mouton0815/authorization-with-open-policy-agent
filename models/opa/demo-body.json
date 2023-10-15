@@ -1,7 +1,7 @@
 {
   "input": {
     "method": "DELETE",
-    "path": ["companies", "123"],
+    "path": "/companies/123",
     "company_id": "123"
   }
 }
