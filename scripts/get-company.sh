@@ -1,6 +1,6 @@
 #!/bin/bash
 
-user=${1:-inge}
+user=${1:-lars}
 source get-user-access-token.sh $user
 
 curl "http://localhost:8090/companies/2" \

@@ -9,7 +9,7 @@ curl -s -X POST "http://localhost:8080/realms/demo/protocol/openid-connect/token
      -d "password=${user}" \
      -d "grant_type=password" \
      -d "client_id=demo-client" \
-     -d "client_secret=jzWiYwTEDNni0qYqpyp7VjezKeFzVdWg" \
+     -d "client_secret=totally-secret" \
 | grep -oE '"access_token":"[^"]+"' \
 | awk -F'"' '{print $4}'
 )
