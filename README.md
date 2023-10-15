@@ -18,7 +18,7 @@ docker run --rm --name keycloak-demo -p 8080:8080 -e KEYCLOAK_ADMIN=admin -e KEY
 ```
 or
 ```shell
-docker run --platform linux/amd64 --rm -p 8181:8181 -v ${PWD}/rego:/rego openpolicyagent/opa run --server --addr :8181 /rego/demo-rules.rego
+docker run --platform linux/amd64 --rm -p 8181:8181 -v ${PWD}/models/opa:/rego openpolicyagent/opa run --server --addr :8181 /rego/demo-rules.rego
 ```
 
 # API Requests

@@ -9,7 +9,7 @@ services:
       - KEYCLOAK_ADMIN=admin
       - KEYCLOAK_ADMIN_PASSWORD=admin
     command: start-dev --import-realm
-  opa:
+  open-policy-agent:
     image: openpolicyagent/opa
     ports:
     - "8181:8181"
