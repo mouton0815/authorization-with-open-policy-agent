@@ -12,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authorization.AuthorizationDecision;
 import org.springframework.security.authorization.AuthorizationManager;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.security.web.access.intercept.RequestAuthorizationContext;
 import org.springframework.web.client.RestClient;
@@ -32,23 +31,32 @@ public class OpaAuthorizationManager implements AuthorizationManager<RequestAuth
 
     @Override
     public AuthorizationDecision check(Supplier<Authentication> authentication, RequestAuthorizationContext context) {
-        return request(context.getRequest());
+        /*
+        if (authentication == null || authentication.get() == null) {
+            logger.info("-----> It is NULL");
+        } else {
+            for (Object o : authentication.get().getAuthorities()) {
+                logger.info("--A--> " + o);
+            }
+        }
+        */
+        return authorizationRequest(authentication.get(), context.getRequest());
     }
 
-    private AuthorizationDecision request(HttpServletRequest request) {
+    private AuthorizationDecision authorizationRequest(Authentication authentication, HttpServletRequest request) {
         RestClient restClient = RestClient.builder().build();
         ResponseEntity<OpaResponseData> response = restClient
                 .post()
                 .uri(opaUri)
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(createOpaRequestPayload(request))
+                .body(createOpaRequestPayload(authentication, request))
                 .retrieve()
                 .toEntity(OpaResponseData.class);
         return toDecision(request, response);
     }
 
-    private OpaRequestData createOpaRequestPayload(HttpServletRequest request) {
-        JwtAuthenticationToken token = (JwtAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
+    private OpaRequestData createOpaRequestPayload(Authentication authentication, HttpServletRequest request) {
+        JwtAuthenticationToken token = (JwtAuthenticationToken) authentication;
         /*
         logger.info("-----> Auth is " + token);
         for (Map.Entry<String, Object> entry : token.getTokenAttributes().entrySet()) {
