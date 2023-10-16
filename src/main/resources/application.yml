@@ -6,7 +6,8 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://localhost:8080/realms/demo
+          # "auth" is the name of the Keycloak container in Docker Compose
+          issuer-uri: http://auth:8080/realms/demo
 
 logging:
   level:
@@ -16,4 +17,5 @@ logging:
         security: debug
 
 open-policy-agent:
-  uri: http://localhost:8181/v1/data/demo/allow
+  # "opa" is the name of the Open Policy Agent container in Docker Compose
+  uri: http://opa:8181/v1/data/demo/allow
