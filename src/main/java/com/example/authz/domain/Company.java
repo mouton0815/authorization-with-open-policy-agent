@@ -1,14 +1,10 @@
 package com.example.authz.domain;
 
 public class Company extends CompanyData {
-    private final int id;
+    public int id;
 
     public Company(int id, CompanyData data) {
-        super(data.getName(), data.getCountry());
+        super(data.name, data.country);
         this.id = id;
-    }
-
-    public int getId() {
-        return id;
     }
 }

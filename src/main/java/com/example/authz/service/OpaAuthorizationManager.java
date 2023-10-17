@@ -75,7 +75,7 @@ public class OpaAuthorizationManager implements AuthorizationManager<RequestAuth
         if (response.getStatusCode().value() != 200 || response.getBody() == null) {
             return new AuthorizationDecision(false);
         }
-        boolean granted = response.getBody().isResult();
+        boolean granted = response.getBody().result;
         logger.info("Access to {} {} was {}", request.getMethod(), request.getRequestURI(), granted ? "granted" : "NOT granted");
         return new AuthorizationDecision(granted);
     }

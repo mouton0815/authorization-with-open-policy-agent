@@ -9,7 +9,7 @@ default allow := false
 allow if {
     input.method in {"GET", "PUT", "DELETE"}
     regex.match(`^/companies/\d+$`, input.path)
-    trim_prefix(input.path, "/companies/") == input.company_id
+    trim_prefix(input.path, "/companies/") == input.companyId
 }
 
 # Users with "view" rights can view the data of all endpoints

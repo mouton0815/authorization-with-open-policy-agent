@@ -1,5 +1,5 @@
 {
   "method": "GET",
   "path": ["companies", "123"],
-  "company_id": "123"
+  "companyId": "123"
 }

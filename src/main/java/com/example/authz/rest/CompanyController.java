@@ -24,7 +24,7 @@ public class CompanyController {
     @PostMapping(value = "/companies", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Company> postCompany(@RequestBody CompanyData companyData) {
         Company company = service.addCompany(companyData);
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(company.getId()).toUri();
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(company.id).toUri();
         return ResponseEntity.created(location).body(company);
     }
 
