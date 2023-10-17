@@ -2,7 +2,6 @@ package com.example.authz.service;
 
 import com.example.authz.domain.OpaRequestData;
 import com.example.authz.domain.OpaResponseData;
-import com.example.authz.utils.JwtUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +15,7 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtAut
 import org.springframework.security.web.access.intercept.RequestAuthorizationContext;
 import org.springframework.web.client.RestClient;
 
-import java.util.Set;
+import java.util.List;
 import java.util.function.Supplier;
 
 public class OpaAuthorizationManager implements AuthorizationManager<RequestAuthorizationContext> {
@@ -31,15 +30,9 @@ public class OpaAuthorizationManager implements AuthorizationManager<RequestAuth
 
     @Override
     public AuthorizationDecision check(Supplier<Authentication> authentication, RequestAuthorizationContext context) {
-        /*
         if (authentication == null || authentication.get() == null) {
-            logger.info("-----> It is NULL");
-        } else {
-            for (Object o : authentication.get().getAuthorities()) {
-                logger.info("--A--> " + o);
-            }
+            throw new RuntimeException("Authentication object is null");
         }
-        */
         return authorizationRequest(authentication.get(), context.getRequest());
     }
 
@@ -63,11 +56,10 @@ public class OpaAuthorizationManager implements AuthorizationManager<RequestAuth
             System.out.println("-----> " + entry.getKey() + " : " + entry.getValue() + " --- " + entry.getValue().getClass());
         }
         */
-        Set<String> roles = JwtUtil.extractRoles(token);
-        // logger.info("-----> Roles: {}", roles);
-        String companyId = JwtUtil.extractCompanyId(token);
         HttpMethod method = HttpMethod.valueOf(request.getMethod());
         String path = request.getRequestURI();
+        List<String> roles = extractRoles(token);
+        String companyId = extractCompanyId(token);
         return new OpaRequestData(method, path, roles, companyId);
     }
 
@@ -78,5 +70,22 @@ public class OpaAuthorizationManager implements AuthorizationManager<RequestAuth
         boolean granted = response.getBody().result;
         logger.info("Access to {} {} was {}", request.getMethod(), request.getRequestURI(), granted ? "granted" : "NOT granted");
         return new AuthorizationDecision(granted);
+    }
+
+    private List<String> extractRoles(JwtAuthenticationToken token) {
+        @SuppressWarnings({"unchecked"})
+        List<String> roles = (List<String>) token.getTokenAttributes().get("roles");
+        if (roles == null) {
+            throw new RuntimeException("Token claim 'roles' missing");
+        }
+        return roles;
+    }
+
+    private static String extractCompanyId(JwtAuthenticationToken token) {
+        String companyId = (String) token.getTokenAttributes().get("company_id");
+        if (companyId == null) {
+            throw new RuntimeException("Token claim 'company_id' missing");
+        }
+        return companyId;
     }
 }
