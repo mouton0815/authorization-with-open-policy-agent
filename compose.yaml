@@ -3,20 +3,20 @@ services:
     image: quay.io/keycloak/keycloak:21.1.1
     ports:
       - "8080:8080"
-    volumes:
-      - ./keycloak:/opt/keycloak/data/import
     environment:
       - KEYCLOAK_ADMIN=admin
       - KEYCLOAK_ADMIN_PASSWORD=admin
-        # The host name must is used for the "iss" claim and must match the name of the Keycloak container ("auth")
+      # The host name must is used for the "iss" claim and must match the name of the Keycloak container ("auth")
       - KC_HOSTNAME_URL=http://auth:8080
+    volumes:
+      - ./keycloak:/opt/keycloak/data/import
     command: start-dev --import-realm
   opa:
     image: openpolicyagent/opa
     ports:
     - "8181:8181"
     volumes:
-    - ./models/opa:/rego
+    - ./rego:/rego
     command: run --server --addr :8181 /rego/demo-rules.rego
   demo:
     build: .

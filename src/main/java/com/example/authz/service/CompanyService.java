@@ -16,10 +16,6 @@ public class CompanyService {
         this.repository = repository;
     }
 
-    public long getCompanyCount() {
-        return repository.getCompanies().count();
-    }
-
     public List<Company> getCompanies() {
         return repository.getCompanies().collect(Collectors.toList());
     }

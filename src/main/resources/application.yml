@@ -1,6 +1,13 @@
 server:
   port: 8090
 
+logging:
+  level:
+    root: info
+    org:
+      springframework:
+        security: debug
+
 spring:
   security:
     oauth2:
@@ -8,13 +15,6 @@ spring:
         jwt:
           # "auth" is the name of the Keycloak container in Docker Compose
           issuer-uri: http://auth:8080/realms/demo
-
-logging:
-  level:
-    root: info
-    org:
-      springframework:
-        security: debug
 
 open-policy-agent:
   # "opa" is the name of the Open Policy Agent container in Docker Compose
