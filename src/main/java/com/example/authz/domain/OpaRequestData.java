@@ -13,16 +13,16 @@ public class OpaRequestData {
         public String method;
         public String path;
         public List<String> roles;
-        public String companyId;
+        public String teamId;
     }
 
     public Input input;
 
-    public OpaRequestData(HttpMethod httpMethod, String path, List<String> roles, String companyId) {
+    public OpaRequestData(HttpMethod httpMethod, String path, List<String> roles, String teamId) {
         this.input = new Input();
         this.input.method = httpMethod.name();
         this.input.path = path;
         this.input.roles = roles;
-        this.input.companyId = companyId;
+        this.input.teamId = teamId;
     }
 }

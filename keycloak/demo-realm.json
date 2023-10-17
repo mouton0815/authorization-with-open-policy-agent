@@ -398,7 +398,7 @@
     "firstName" : "Fred",
     "lastName" : "Feuerstein",
     "attributes" : {
-      "company_id" : [ "1" ]
+      "teamId" : [ "1" ]
     },
     "credentials" : [ {
       "id" : "c2a94f6e-92a9-459d-b7ae-a69b01fd7961",
@@ -423,7 +423,7 @@
     "firstName" : "Inge",
     "lastName" : "Pawelczik",
     "attributes" : {
-      "company_id" : [ "2" ]
+      "teamId" : [ "2" ]
     },
     "credentials" : [ {
       "id" : "e70a08e6-5bc3-4937-b946-3ddbd076a52f",
@@ -448,7 +448,7 @@
     "firstName" : "Lars",
     "lastName" : "Larsen",
     "attributes" : {
-      "company_id" : [ "2" ]
+      "teamId" : [ "2" ]
     },
     "credentials" : [ {
       "id" : "0397d2e0-f846-47dc-bea9-1088c3b67372",
@@ -633,7 +633,7 @@
     "nodeReRegistrationTimeout" : -1,
     "protocolMappers" : [ {
       "id" : "3d7a91e7-d4e5-43d2-95e2-79466f7c55b3",
-      "name" : "Company ID",
+      "name" : "Team ID",
       "protocol" : "openid-connect",
       "protocolMapper" : "oidc-usermodel-attribute-mapper",
       "consentRequired" : false,
@@ -641,10 +641,10 @@
         "aggregate.attrs" : "false",
         "userinfo.token.claim" : "false",
         "multivalued" : "false",
-        "user.attribute" : "company_id",
+        "user.attribute" : "teamId",
         "id.token.claim" : "false",
         "access.token.claim" : "true",
-        "claim.name" : "company_id"
+        "claim.name" : "teamId"
       }
     } ],
     "defaultClientScopes" : [ "web-origins", "acr", "roles", "profile", "email" ],

@@ -1,10 +1,10 @@
 #!/bin/bash
 
 user=${1:-fred}
-source get-user-access-token.sh $user
+source get-access-token.sh $user
 
-curl -X POST "http://localhost:8090/companies" \
+curl -X POST "http://localhost:8090/teams" \
      -H "Accept: application/json" \
      -H "Content-Type: application/json" \
      -H "Authorization: Bearer ${TOKEN}" \
-     -d '{"name":"My Company", "country": "Sweden"}'
+     -d '{"name":"Team D", "city": "Madrid"}'

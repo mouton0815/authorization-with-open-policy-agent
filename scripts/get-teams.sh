@@ -1,8 +1,8 @@
 #!/bin/bash
 
 user=${1:-inge}
-source get-user-access-token.sh $user
+source get-access-token.sh $user
 
-curl "http://localhost:8090/companies" \
+curl "http://localhost:8090/teams" \
      -H "Accept: application/json" \
      -H "Authorization: Bearer ${TOKEN}"

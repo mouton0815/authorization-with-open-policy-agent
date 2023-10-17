@@ -59,8 +59,8 @@ public class OpaAuthorizationManager implements AuthorizationManager<RequestAuth
         HttpMethod method = HttpMethod.valueOf(request.getMethod());
         String path = request.getRequestURI();
         List<String> roles = extractRoles(token);
-        String companyId = extractCompanyId(token);
-        return new OpaRequestData(method, path, roles, companyId);
+        String teamId = extractTeamId(token);
+        return new OpaRequestData(method, path, roles, teamId);
     }
 
     private AuthorizationDecision toDecision(HttpServletRequest request, ResponseEntity<OpaResponseData> response) {
@@ -81,11 +81,11 @@ public class OpaAuthorizationManager implements AuthorizationManager<RequestAuth
         return roles;
     }
 
-    private static String extractCompanyId(JwtAuthenticationToken token) {
-        String companyId = (String) token.getTokenAttributes().get("company_id");
-        if (companyId == null) {
-            throw new RuntimeException("Token claim 'company_id' missing");
+    private static String extractTeamId(JwtAuthenticationToken token) {
+        String teamId = (String) token.getTokenAttributes().get("teamId");
+        if (teamId == null) {
+            throw new RuntimeException("Token claim 'teamId' missing");
         }
-        return companyId;
+        return teamId;
     }
 }
