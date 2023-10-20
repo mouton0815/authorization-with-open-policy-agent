@@ -1,7 +1,7 @@
-package com.example.authz.service;
+package com.example.demo.service;
 
-import com.example.authz.domain.Team;
-import com.example.authz.domain.TeamData;
+import com.example.demo.domain.Team;
+import com.example.demo.domain.TeamData;
 
 import java.util.Optional;
 import java.util.stream.Stream;

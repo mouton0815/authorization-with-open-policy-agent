@@ -1,7 +1,7 @@
-package com.example.authz.service;
+package com.example.demo.service;
 
-import com.example.authz.domain.OpaRequestData;
-import com.example.authz.domain.OpaResponseData;
+import com.example.demo.domain.OpaRequestData;
+import com.example.demo.domain.OpaResponseData;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

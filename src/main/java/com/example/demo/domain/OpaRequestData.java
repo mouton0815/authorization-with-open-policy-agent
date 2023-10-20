@@ -1,4 +1,4 @@
-package com.example.authz.domain;
+package com.example.demo.domain;
 
 import org.springframework.http.HttpMethod;
 

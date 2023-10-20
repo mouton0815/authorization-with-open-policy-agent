@@ -1,8 +1,8 @@
-package com.example.authz.repository;
+package com.example.demo.repository;
 
-import com.example.authz.domain.Team;
-import com.example.authz.domain.TeamData;
-import com.example.authz.service.TeamRepository;
+import com.example.demo.domain.Team;
+import com.example.demo.domain.TeamData;
+import com.example.demo.service.TeamRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;

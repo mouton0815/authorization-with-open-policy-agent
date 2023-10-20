@@ -1,8 +1,8 @@
-package com.example.authz.rest;
+package com.example.demo.rest;
 
-import com.example.authz.domain.Team;
-import com.example.authz.domain.TeamData;
-import com.example.authz.service.TeamService;
+import com.example.demo.domain.Team;
+import com.example.demo.domain.TeamData;
+import com.example.demo.service.TeamService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;

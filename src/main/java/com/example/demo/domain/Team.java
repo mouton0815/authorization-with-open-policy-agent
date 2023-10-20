@@ -1,4 +1,4 @@
-package com.example.authz.domain;
+package com.example.demo.domain;
 
 public class Team extends TeamData {
     public int id;
