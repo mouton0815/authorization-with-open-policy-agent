@@ -1,6 +1,6 @@
 {
   "input": {
-    "method": "DELETE",
+    "method": "PUT",
     "path": "/teams/123",
     "teamId": "123"
   }
