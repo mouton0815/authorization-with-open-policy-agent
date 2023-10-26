@@ -33,16 +33,13 @@ public class OpaAuthorizationManager implements AuthorizationManager<RequestAuth
         if (authentication == null || authentication.get() == null) {
             throw new RuntimeException("Authentication object is null");
         }
-        return authorizationRequest(authentication.get(), context.getRequest());
-    }
-
-    private AuthorizationDecision authorizationRequest(Authentication authentication, HttpServletRequest request) {
+        HttpServletRequest request = context.getRequest();
         RestClient restClient = RestClient.builder().build();
         ResponseEntity<OpaResponseData> response = restClient
                 .post()
                 .uri(opaUri)
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(createOpaRequestPayload(authentication, request))
+                .body(createOpaRequestPayload(authentication.get(), request))
                 .retrieve()
                 .toEntity(OpaResponseData.class);
         return toDecision(request, response);

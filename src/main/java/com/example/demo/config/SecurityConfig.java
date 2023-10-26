@@ -20,7 +20,7 @@ public class SecurityConfig {
     private String opaUri;
 
     @Bean
-    public SecurityFilterChain accountAuthorization(HttpSecurity http) throws Exception {
+    public SecurityFilterChain authorization(HttpSecurity http) throws Exception {
         return http
                 .authorizeHttpRequests(requests ->
                         requests.anyRequest()
