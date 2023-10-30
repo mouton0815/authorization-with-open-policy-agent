@@ -1,7 +1,8 @@
 {
   "input": {
-    "method": "PUT",
+    "method": "GET",
     "path": "/teams/123",
-    "teamId": "123"
+    "roles": [],
+    "groups": ["Team123"]
   }
 }

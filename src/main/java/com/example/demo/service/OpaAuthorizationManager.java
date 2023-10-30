@@ -55,9 +55,9 @@ public class OpaAuthorizationManager implements AuthorizationManager<RequestAuth
         */
         HttpMethod method = HttpMethod.valueOf(request.getMethod());
         String path = request.getRequestURI();
-        List<String> roles = extractRoles(token);
-        String teamId = extractTeamId(token);
-        return new OpaRequestData(method, path, roles, teamId);
+        List<String> roles = extractClaim(token, "roles");
+        List<String> groups = extractClaim(token, "groups");
+        return new OpaRequestData(method, path, roles, groups);
     }
 
     private AuthorizationDecision toDecision(HttpServletRequest request, ResponseEntity<OpaResponseData> response) {
@@ -69,20 +69,17 @@ public class OpaAuthorizationManager implements AuthorizationManager<RequestAuth
         return new AuthorizationDecision(granted);
     }
 
-    private List<String> extractRoles(JwtAuthenticationToken token) {
+    private List<String> extractClaim(JwtAuthenticationToken token, String claim) {
         @SuppressWarnings({"unchecked"})
-        List<String> roles = (List<String>) token.getTokenAttributes().get("roles");
-        if (roles == null) {
-            throw new RuntimeException("Token claim 'roles' missing");
+        List<String> list = (List<String>) token.getTokenAttributes().get(claim);
+        if (list == null) {
+            throw new RuntimeException("Token claim '" + claim + "' missing");
         }
-        return roles;
-    }
-
-    private static String extractTeamId(JwtAuthenticationToken token) {
-        String teamId = (String) token.getTokenAttributes().get("teamId");
-        if (teamId == null) {
-            throw new RuntimeException("Token claim 'teamId' missing");
+        /*
+        for (String entry : list) {
+            System.out.println("-----> " + claim + " : " + entry);
         }
-        return teamId;
+        */
+        return list;
     }
 }

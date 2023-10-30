@@ -350,7 +350,23 @@
       } ]
     }
   },
-  "groups" : [ ],
+  "groups" : [ {
+    "id" : "6462b309-9436-413e-a42f-6bb9d2bb85bc",
+    "name" : "Team1",
+    "path" : "/Team1",
+    "attributes" : { },
+    "realmRoles" : [ ],
+    "clientRoles" : { },
+    "subGroups" : [ ]
+  }, {
+    "id" : "f9d220ee-7c1f-495f-b742-ddfb898f6ba6",
+    "name" : "Team2",
+    "path" : "/Team2",
+    "attributes" : { },
+    "realmRoles" : [ ],
+    "clientRoles" : { },
+    "subGroups" : [ ]
+  } ],
   "defaultRole" : {
     "id" : "14482533-b601-477a-b71c-5898af8f4dfe",
     "name" : "default-roles-demo",
@@ -397,9 +413,6 @@
     "emailVerified" : true,
     "firstName" : "Fred",
     "lastName" : "Feuerstein",
-    "attributes" : {
-      "teamId" : [ "1" ]
-    },
     "credentials" : [ {
       "id" : "c2a94f6e-92a9-459d-b7ae-a69b01fd7961",
       "type" : "password",
@@ -412,7 +425,7 @@
     "requiredActions" : [ ],
     "realmRoles" : [ "api-full", "default-roles-demo" ],
     "notBefore" : 0,
-    "groups" : [ ]
+    "groups" : [ "/Team1" ]
   }, {
     "id" : "4d027917-0a32-433b-a3aa-a90894c6d68f",
     "createdTimestamp" : 1696694673246,
@@ -422,9 +435,6 @@
     "emailVerified" : true,
     "firstName" : "Inge",
     "lastName" : "Pawelczik",
-    "attributes" : {
-      "teamId" : [ "2" ]
-    },
     "credentials" : [ {
       "id" : "e70a08e6-5bc3-4937-b946-3ddbd076a52f",
       "type" : "password",
@@ -437,7 +447,7 @@
     "requiredActions" : [ ],
     "realmRoles" : [ "api-read", "default-roles-demo" ],
     "notBefore" : 0,
-    "groups" : [ ]
+    "groups" : [ "/Team2" ]
   }, {
     "id" : "70a54339-e735-4e31-b1df-e0a408aefdb1",
     "createdTimestamp" : 1696694773499,
@@ -447,9 +457,6 @@
     "emailVerified" : true,
     "firstName" : "Lars",
     "lastName" : "Larsen",
-    "attributes" : {
-      "teamId" : [ "2" ]
-    },
     "credentials" : [ {
       "id" : "0397d2e0-f846-47dc-bea9-1088c3b67372",
       "type" : "password",
@@ -462,7 +469,7 @@
     "requiredActions" : [ ],
     "realmRoles" : [ "default-roles-demo" ],
     "notBefore" : 0,
-    "groups" : [ ]
+    "groups" : [ "/Team2" ]
   } ],
   "scopeMappings" : [ {
     "clientScope" : "offline_access",
@@ -632,19 +639,17 @@
     "fullScopeAllowed" : true,
     "nodeReRegistrationTimeout" : -1,
     "protocolMappers" : [ {
-      "id" : "3d7a91e7-d4e5-43d2-95e2-79466f7c55b3",
-      "name" : "Team ID",
+      "id" : "5f631a1f-ab70-46c8-8f6b-831bc39d9ebf",
+      "name" : "Group Claim",
       "protocol" : "openid-connect",
-      "protocolMapper" : "oidc-usermodel-attribute-mapper",
+      "protocolMapper" : "oidc-group-membership-mapper",
       "consentRequired" : false,
       "config" : {
-        "aggregate.attrs" : "false",
-        "userinfo.token.claim" : "false",
-        "multivalued" : "false",
-        "user.attribute" : "teamId",
+        "full.path" : "false",
         "id.token.claim" : "false",
         "access.token.claim" : "true",
-        "claim.name" : "teamId"
+        "claim.name" : "groups",
+        "userinfo.token.claim" : "false"
       }
     } ],
     "defaultClientScopes" : [ "web-origins", "acr", "roles", "profile", "email" ],
@@ -728,9 +733,10 @@
     "description" : "OpenID Connect scope for add user roles to the access token",
     "protocol" : "openid-connect",
     "attributes" : {
-      "include.in.token.scope" : "false",
-      "consent.screen.text" : "${rolesScopeConsentText}",
-      "display.on.consent.screen" : "true"
+      "include.in.token.scope" : "true",
+      "display.on.consent.screen" : "true",
+      "gui.order" : "",
+      "consent.screen.text" : "${rolesScopeConsentText}"
     },
     "protocolMappers" : [ {
       "id" : "4c7bef83-2d9b-4866-bdc9-5a49343e6720",

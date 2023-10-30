@@ -7,10 +7,11 @@ import future.keywords.in
 default allow := false
 
 # Members of a team have read+write access to the data of (only) that team
-# Function trim_prefix returns the suffix of input.path that follows "/teams/"
 allow if {
     input.method in {"GET", "PUT"}
-    trim_prefix(input.path, "/teams/") == input.teamId
+    teamId := trim_prefix(input.path, "/teams/")
+    teamName := concat("", ["Team", teamId])
+    teamName in input.groups
 }
 
 # Users with "api-read" rights can read the data of all endpoints

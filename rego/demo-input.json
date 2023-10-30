@@ -1,6 +1,6 @@
 {
   "method": "GET",
   "path": "/teams/123",
-  "teamId": "123",
-  "roles": []
+  "roles": [],
+  "groups": ["Team123"]
 }
