@@ -8,7 +8,7 @@ Although authentication and authorization can be combined (see for example [Keyc
 there is a recent trend to separate them. Another trend is to move the evaluation of authorization rules outside the resource server.
 A complete setup for protecting a REST API therefore consists of three services and a REST client:
 
-![Architecture](architecture.png)
+![Architecture](architecture.svg)
 
 The workflow for authenticating and authorizing a REST request consists of the following steps: 
 1. On startup, the resource server retrieves the [JWK Set](https://datatracker.ietf.org/doc/html/rfc7517) needed for JWT validation from Keycloak.
