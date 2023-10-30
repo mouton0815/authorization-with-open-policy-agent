@@ -45,14 +45,6 @@
   "failureFactor" : 30,
   "roles" : {
     "realm" : [ {
-      "id" : "7f513850-ec0c-4891-995d-93f54638404f",
-      "name" : "api-full",
-      "description" : "Role for full privileges on REST APIs",
-      "composite" : false,
-      "clientRole" : false,
-      "containerId" : "86e9b5f2-5fd1-4f7e-9eec-ffb6da2c8f69",
-      "attributes" : { }
-    }, {
       "id" : "5aacbf5b-11dc-4919-83dc-46ab4a2a3c9c",
       "name" : "uma_authorization",
       "description" : "${role_uma_authorization}",
@@ -61,9 +53,17 @@
       "containerId" : "86e9b5f2-5fd1-4f7e-9eec-ffb6da2c8f69",
       "attributes" : { }
     }, {
-      "id" : "af97ec0a-bc40-4679-9deb-fa9d4b327239",
-      "name" : "api-read",
-      "description" : "Role for read privileges on REST APIs",
+      "id" : "aae8d904-6860-4615-925f-190abd9055d2",
+      "name" : "admin",
+      "description" : "Full access to all REST APIs",
+      "composite" : false,
+      "clientRole" : false,
+      "containerId" : "86e9b5f2-5fd1-4f7e-9eec-ffb6da2c8f69",
+      "attributes" : { }
+    }, {
+      "id" : "68b704e3-da82-4d18-acc0-d33b9f6e86dd",
+      "name" : "analyst",
+      "description" : "Read access to all REST APIs",
       "composite" : false,
       "clientRole" : false,
       "containerId" : "86e9b5f2-5fd1-4f7e-9eec-ffb6da2c8f69",
@@ -423,7 +423,7 @@
     } ],
     "disableableCredentialTypes" : [ ],
     "requiredActions" : [ ],
-    "realmRoles" : [ "api-full", "default-roles-demo" ],
+    "realmRoles" : [ "admin", "default-roles-demo" ],
     "notBefore" : 0,
     "groups" : [ "/Team1" ]
   }, {
@@ -445,7 +445,7 @@
     } ],
     "disableableCredentialTypes" : [ ],
     "requiredActions" : [ ],
-    "realmRoles" : [ "api-read", "default-roles-demo" ],
+    "realmRoles" : [ "analyst", "default-roles-demo" ],
     "notBefore" : 0,
     "groups" : [ "/Team2" ]
   }, {

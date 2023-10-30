@@ -17,10 +17,10 @@ allow if {
 # Users with "api-read" rights can read the data of all endpoints
 allow if {
     input.method == "GET"
-    "api-read" in input.roles
+    "analyst" in input.roles
 }
 
 # Users with "api-full" rights have full access to all endpoints
 allow if {
-    "api-full" in input.roles
+    "admin" in input.roles
 }
