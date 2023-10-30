@@ -3,11 +3,10 @@ This project studies the securing of the REST API of a Spring Boot resource serv
 with [Open Policy Agent](https://www.openpolicyagent.org) (OPA) as authorization server
 and [Keycloak](https://www.keycloak.org) as authentication server.
 
-## Overview
+## Authorization Overview
 Although authentication and authorization can be combined (see for example [Keycloak's authorization services](https://www.keycloak.org/docs/latest/authorization_services/)),
 there is a recent trend to separate them. Another trend is to move the evaluation of authorization rules outside the resource server.
-The complete setup for protecting a REST API therefore consists of three services and and a REST client:
-
+A complete setup for protecting a REST API therefore consists of three services and a REST client:
 
 ![Architecture](architecture.png)
 
@@ -21,6 +20,78 @@ The workflow for authenticating and authorizing a REST request consists of the f
 7. Given the query path and input data, OPA evaluates the [corresponding rules](./rego/demo-rules.rego) and comes to a decision.
 8. OPA returns the decision as JSON document.
 9. The resource server extracts the decision from the result and grants or denies the access to the endpoint.
+
+The figure also shows that there is no technical dependency between Keycloak and OPA.
+Also (and fortunately), OPA does not need to know anything about the users managed by Keycloak.
+Keycloak passes all required user information in (custom) JWT claims, especially the user's roles and group memberships.
+
+## Authorization Details
+Assume that the resource server manages information about sports teams.
+A user wants to modify details of team 123.
+After authentication with Keycloak, the API client obtains a JWT which, among other information,
+contains the following claims (step 2):  
+```json
+{
+  "roles": ["analyst"],
+  "groups": ["Team123"]
+}
+```
+The JWT is passed as `Bearer` JWT to the resource server (step 3): 
+```
+PUT http://localhost:8090/teams/123
+```
+The resource server builds the following input JSON for OPA (steps 4 and 5)
+```json
+{
+  "input": {
+    "method": "PUT",
+    "path": "/teams/123",
+    "roles": ["analyst"],
+    "groups": ["Team123"]
+  }
+}
+```
+and sends it to OPA as `POST` body of the following request (step 6):
+```
+http://localhost:8181/v1/data/demo/allow
+```
+
+The rule set evaluated by OPA in step 7 is:
+```rego
+package demo
+
+import future.keywords.if
+import future.keywords.in
+
+# The default value is used when all rules with the same name are undefined
+default allow := false
+
+# Members of a team have read+write access to the data of (only) that team
+allow if {
+    input.method in {"GET", "PUT"}
+    teamId := trim_prefix(input.path, "/teams/")
+    teamName := concat("", ["Team", teamId])
+    teamName in input.groups
+}
+
+# Users with "api-read" rights can read the data of all endpoints
+allow if {
+    input.method == "GET"
+    "api-read" in input.roles
+}
+
+# Users with "api-full" rights have full access to all endpoints
+allow if {
+    "api-full" in input.roles
+}
+```
+Because the "team membership" rule matches, OPA returns the following JSON result (step 8):
+```json
+{
+  "result": true
+}
+```
+This lets the resource server grant access to resource `/teams/123` (step 9).
 
 ## System Requirements
 You need local installations of
@@ -48,7 +119,7 @@ For development and testing, the OPA service can be used separately.
 It has an "eval" mode that allows the testing of rule sets (written in OPA's [Rego language](https://www.openpolicyagent.org/docs/latest/#rego)):
 
 ```shell
-docker run --rm -v $(pwd)/rego:/rego openpolicyagent/opa eval -i /rego/demo-input.json -d /rego/demo-rules.rego data.demo.allow./opa eval -i demo-input.json -d demo-rules.rego data.demo.allow
+docker run --rm -v $(pwd)/rego:/rego openpolicyagent/opa eval -i /rego/demo-input.json -d /rego/demo-rules.rego data.demo.allow
 ```
 OPA can also run as server:
 ```shell
