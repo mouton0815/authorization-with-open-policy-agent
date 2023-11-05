@@ -1,7 +1,7 @@
 package com.example.demo.service;
 
-import com.example.demo.domain.OpaRequestData;
-import com.example.demo.domain.OpaResponseData;
+import com.example.demo.domain.OpaRequest;
+import com.example.demo.domain.OpaResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,17 +35,17 @@ public class OpaAuthorizationManager implements AuthorizationManager<RequestAuth
         }
         HttpServletRequest request = context.getRequest();
         RestClient restClient = RestClient.builder().build();
-        ResponseEntity<OpaResponseData> response = restClient
+        ResponseEntity<OpaResponse> response = restClient
                 .post()
                 .uri(opaUri)
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(createOpaRequestPayload(authentication.get(), request))
                 .retrieve()
-                .toEntity(OpaResponseData.class);
+                .toEntity(OpaResponse.class);
         return toDecision(request, response);
     }
 
-    private OpaRequestData createOpaRequestPayload(Authentication authentication, HttpServletRequest request) {
+    private OpaRequest createOpaRequestPayload(Authentication authentication, HttpServletRequest request) {
         JwtAuthenticationToken token = (JwtAuthenticationToken) authentication;
         /*
         logger.info("-----> Auth is " + token);
@@ -57,10 +57,10 @@ public class OpaAuthorizationManager implements AuthorizationManager<RequestAuth
         String path = request.getRequestURI();
         List<String> roles = extractClaim(token, "roles");
         List<String> groups = extractClaim(token, "groups");
-        return new OpaRequestData(method, path, roles, groups);
+        return new OpaRequest(method, path, roles, groups);
     }
 
-    private AuthorizationDecision toDecision(HttpServletRequest request, ResponseEntity<OpaResponseData> response) {
+    private AuthorizationDecision toDecision(HttpServletRequest request, ResponseEntity<OpaResponse> response) {
         if (response.getStatusCode().value() != 200 || response.getBody() == null) {
             return new AuthorizationDecision(false);
         }

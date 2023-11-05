@@ -12,7 +12,7 @@ A complete setup for protecting a REST API therefore consists of three services 
 
 The workflow for authenticating and authorizing a REST request consists of the following steps: 
 1. On startup, the resource server retrieves the [JWK Set](https://datatracker.ietf.org/doc/html/rfc7517) needed for JWT validation from Keycloak.
-2. The REST client (curl) obtains a JWT for the user from Keycloak using the [OAuth 2 password grant](https://oauth.net/2/grant-types/password/).
+2. The REST client ([curl](https://curl.se)) obtains a JWT for the user from Keycloak using the [OAuth 2 password grant](https://oauth.net/2/grant-types/password/).
 3. The REST client accesses the REST API, passing the JWT as `Bearer` token.
 4. The resource server validates the JWT and extracts the required information (e.g. user roles).
 5. Using data from the JWT and the request, the resource server builds an [input document](./rego/demo-body.json) for OPA.

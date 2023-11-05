@@ -8,7 +8,7 @@ import java.util.List;
  * POST request body to be sent to the Open Policy Agent (OPA).
  * The data is collected from the original REST request and the Keycloak JWT.
  */
-public class OpaRequestData {
+public class OpaRequest {
     private static class Input {
         public String method;
         public String path;
@@ -18,7 +18,7 @@ public class OpaRequestData {
 
     public Input input;
 
-    public OpaRequestData(HttpMethod httpMethod, String path, List<String> roles, List<String> groups) {
+    public OpaRequest(HttpMethod httpMethod, String path, List<String> roles, List<String> groups) {
         this.input = new Input();
         this.input.method = httpMethod.name();
         this.input.path = path;

@@ -14,13 +14,13 @@ allow if {
     teamName in input.groups
 }
 
-# Users with "api-read" rights can read the data of all endpoints
+# Users with the "analyst" role can read the data of all endpoints
 allow if {
     input.method == "GET"
     "analyst" in input.roles
 }
 
-# Users with "api-full" rights have full access to all endpoints
+# Users with the "admin" role have full access to all endpoints
 allow if {
     "admin" in input.roles
 }

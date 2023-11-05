@@ -1,5 +1,5 @@
 {
-  "method": "GET",
+  "method": "PUT",
   "path": "/teams/123",
   "roles": [],
   "groups": ["Team123"]
