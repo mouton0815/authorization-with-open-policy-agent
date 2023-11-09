@@ -1,10 +1,7 @@
 package com.example.demo.domain;
 
-public class Team extends TeamData {
-    public int id;
-
+public record Team(int id, String name, String city) {
     public Team(int id, TeamData data) {
-        super(data.name, data.city);
-        this.id = id;
+        this(id, data.name(), data.city());
     }
 }

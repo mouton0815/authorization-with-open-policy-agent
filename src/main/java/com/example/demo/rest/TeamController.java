@@ -24,7 +24,7 @@ public class TeamController {
     @PostMapping(value = "/teams", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Team> postTeam(@RequestBody TeamData teamData) {
         Team team = service.addTeam(teamData);
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(team.id).toUri();
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(team.id()).toUri();
         return ResponseEntity.created(location).body(team);
     }
 
