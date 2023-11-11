@@ -3,6 +3,8 @@ This project studies the securing of the REST API of a Spring Boot resource serv
 with [Open Policy Agent](https://www.openpolicyagent.org) (OPA) as authorization server
 and [Keycloak](https://www.keycloak.org) as authentication server.
 
+Be sure to check out the corresponding Medium article: [Externalize your API Protection!](https://medium.com/@torsten.schlieder/externalize-your-api-protection-edc720e64f2d)
+
 ## Authorization Overview
 Although authentication and authorization can be combined (see for example [Keycloak's authorization services](https://www.keycloak.org/docs/latest/authorization_services/)),
 there is a recent trend to separate them. Another trend is to move the evaluation of authorization rules outside the resource server.
