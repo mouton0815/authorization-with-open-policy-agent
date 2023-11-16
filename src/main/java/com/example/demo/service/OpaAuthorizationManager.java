@@ -47,12 +47,6 @@ public class OpaAuthorizationManager implements AuthorizationManager<RequestAuth
 
     private OpaRequest createOpaRequestPayload(Authentication authentication, HttpServletRequest request) {
         JwtAuthenticationToken token = (JwtAuthenticationToken) authentication;
-        /*
-        logger.info("-----> Auth is " + token);
-        for (Map.Entry<String, Object> entry : token.getTokenAttributes().entrySet()) {
-            System.out.println("-----> " + entry.getKey() + " : " + entry.getValue() + " --- " + entry.getValue().getClass());
-        }
-        */
         HttpMethod method = HttpMethod.valueOf(request.getMethod());
         String path = request.getRequestURI();
         List<String> roles = extractClaim(token, "roles");
@@ -75,11 +69,6 @@ public class OpaAuthorizationManager implements AuthorizationManager<RequestAuth
         if (list == null) {
             throw new RuntimeException("Token claim '" + claim + "' missing");
         }
-        /*
-        for (String entry : list) {
-            System.out.println("-----> " + claim + " : " + entry);
-        }
-        */
         return list;
     }
 }
